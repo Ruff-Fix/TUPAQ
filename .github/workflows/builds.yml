@@ -51,9 +51,9 @@ jobs:
 
     - name: 📦 Install dependencies
       run: yarn
-
     - name: 📋 Test project
       run: yarn test --updateSnapshot
+      timeout-minutes: 2
 
     - name: 👷 Build app
       run: |
