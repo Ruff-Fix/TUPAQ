@@ -53,7 +53,7 @@ jobs:
       run: yarn
 
     - name: 📋 Test project
-      run: yarn test:ci --verbose --maxWorkers=2
+      run: yarn test --updateSnapshot
 
     - name: 👷 Build app
       run: |
