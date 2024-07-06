@@ -53,7 +53,7 @@ jobs:
       run: yarn
 
     - name: 📋 Test project
-      run: yarn test --updateSnapshot
+      run: yarn test
 
     - name: 👷 Build app
       run: |
