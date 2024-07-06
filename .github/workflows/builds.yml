@@ -51,16 +51,27 @@ jobs:
 
     - name: 📦 Install dependencies
       run: yarn
+
     - name: 📋 Test project
       run: yarn test --updateSnapshot
       timeout-minutes: 2
 
-    - name: 👷 Build app
+    - name: 👷 Build app (iOS)
+      if: ${{ github.event.inputs.platform == 'ios' }}
       run: |
         eas build --local \
           --non-interactive \
           --output=./app-build \
-          --platform=${{ github.event.inputs.platform }} \
+          --platform=ios \
+          --profile=${{ github.event.inputs.profile }}
+
+    - name: 👷 Build app (Android)
+      if: ${{ github.event.inputs.platform == 'android' }}
+      run: |
+        eas build --local \
+          --non-interactive \
+          --output=./app-build \
+          --platform=android \
           --profile=${{ github.event.inputs.profile }}
 
     - name: 🚢 Submit
