@@ -53,8 +53,7 @@ jobs:
       run: yarn
 
     - name: 📋 Test project
-      run: yarn test --updateSnapshot
-      timeout-minutes: 2
+      run: yarn test
 
     - name: 👷 Build app (iOS)
       if: ${{ github.event.inputs.platform == 'ios' }}
