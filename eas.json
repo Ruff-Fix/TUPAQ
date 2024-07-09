@@ -4,20 +4,21 @@
   },
   "build": {
     "development": {
+      "developmentClient": true,
       "distribution": "internal",
-      "android": {
-        "buildType": "apk"
+      "env": {
+        "ENVIROMENT": "development"
       }
     },
     "preview": {
       "distribution": "internal",
-      "android": {
-        "buildType": "apk"
+      "env": {
+        "ENVIROMENT": "preview"
       }
     },
     "production": {
-      "android": {
-        "buildType": "app-bundle"
+      "env": {
+        "ENVIROMENT": "production"
       }
     }
   },
