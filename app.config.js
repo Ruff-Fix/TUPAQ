@@ -39,7 +39,8 @@ const config = () => ({
         owner: 'ruffy',
         plugins: [
             'expo-router',
-            'expo-font'
+            'expo-font',
+            'expo-localization',
         ],
         extra: {
             eas: {
