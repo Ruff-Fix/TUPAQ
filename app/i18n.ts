@@ -1,7 +1,9 @@
-import { initReactI18next } from "react-i18next";
+import i18n from 'i18next';
+import { initReactI18next } from 'react-i18next';
 import en from '@/i18n/en.json';
 import nb from '@/i18n/nb.json';
 import pl from '@/i18n/pl.json';
+import { Platform } from 'react-native';
 
 const resources = {
   en: { translation: en },
@@ -9,9 +11,10 @@ const resources = {
   pl: { translation: pl },
 };
 
-const i18n = initReactI18next({
+i18n.use(initReactI18next).init({
+  compatibilityJSON: Platform.OS === 'android' ? 'v3' : undefined,
   resources,
-  lng: 'en', // Set the default language
+  lng: 'nb', // Set the default language
   fallbackLng: 'en', // Set the fallback language
   interpolation: { escapeValue: false },
 });

@@ -7,7 +7,7 @@ import { Pressable } from 'react-native';
 import Colors from '@/constants/Colors';
 import { useColorScheme } from '@/components/useColorScheme';
 import { useClientOnlyValue } from '@/components/useClientOnlyValue';
-import i18n from '@/app/i18n';
+import i18next from '@/app/i18n';
 
 // You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
 function TabBarIcon(props: {
@@ -43,7 +43,7 @@ export default function TabLayout() {
         headerTitleAlign: 'center',
         headerTitle: 'tupaQ',
         headerRight: () => (
-          <Link href="/settingsModal" asChild>
+          <Link href="/SettingsModal" asChild>
             <Pressable>
               {({ pressed }) => (
                 <MaterialIcons
@@ -60,14 +60,14 @@ export default function TabLayout() {
       <Tabs.Screen
         name="GamesScreen"
         options={{
-          title: i18n.t('gamesScreen'),
+          title: i18next.t('gamesScreen'),
           tabBarIcon: ({ color }) => <TabBarMaterialCommunityIcon name="robot-happy-outline" color={color} />,
         }}
       />
       <Tabs.Screen
         name="QuizScreen"
         options={{
-          title: i18n.t('quizScreen'),
+          title: i18next.t('quizScreen'),
           tabBarIcon: ({ color }) => <TabBarIcon name="quora" color={color} />,
         }}
       />

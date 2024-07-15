@@ -1,24 +1,28 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { Platform, StyleSheet, Pressable } from 'react-native';
 import { Text, View } from '@/components/Themed';
-import i18n from './i18n';
+import i18next from '@/app/i18n';
 
-const SettingsScreen = () => {
+const SettingsModal = () => {
 
-  const [language, setLanguage] = useState(i18n.language);
+  const [language, setLanguage] = useState(i18next.language);
 
-  const handleLanguageChange = (language: string) => {
-    i18n.changeLanguage(language);
-    setLanguage(language);
+  const handleLanguageChange = (newLanguage: string) => {
+    i18next.changeLanguage(newLanguage);
+    setLanguage(newLanguage);
   };
+
+  useEffect(() => {
+    handleLanguageChange(language);
+  }, []);
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>{i18n.t('settings')}</Text>
+      <Text style={styles.title}>{i18next.t('settings')}</Text>
       <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
       <View style={styles.languageContainer}>
-        <Text style={styles.languageLabel}>{i18n.t('language')}</Text>
+        <Text style={styles.languageLabel}>{i18next.t('language')}</Text>
         <Pressable
           style={[styles.languageButton, language === 'en' && styles.selectedLanguage]}
           onPress={() => handleLanguageChange('en')}
@@ -82,4 +86,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default SettingsScreen;
+export default SettingsModal;

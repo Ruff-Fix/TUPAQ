@@ -3,7 +3,7 @@ import { FlatList, StyleSheet, Image, Pressable } from 'react-native';
 import { Link } from 'expo-router';
 import Colors from '@/constants/Colors';
 import { Text, View } from '@/components/Themed';
-import i18n from '@/app/i18n';
+import i18next from '@/app/i18n';
 
 const imageData = [
   { id: '1', source: require('@/assets/images/cat1.jpg'), link: '/mimic' },
@@ -23,7 +23,7 @@ const renderItem = ({ item }: { item: typeof imageData[number] }) => (
 const GamesScreen = () => {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>{i18n.t('gamesScreen')}</Text>
+      <Text style={styles.title}>{i18next.t('gamesScreen')}</Text>
       <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
       <FlatList 
         data={imageData}
