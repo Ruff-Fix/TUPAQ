@@ -3,19 +3,26 @@ import { StatusBar } from 'expo-status-bar';
 import { Platform, StyleSheet, Pressable } from 'react-native';
 import { Text, View } from '@/components/Themed';
 import i18next from '@/app/i18n';
+import { useLanguage } from './LanguageContext';
 
 const SettingsModal = () => {
 
-  const [language, setLanguage] = useState(i18next.language);
+  const { language, setLanguage } = useLanguage();
 
   const handleLanguageChange = (newLanguage: string) => {
-    i18next.changeLanguage(newLanguage);
     setLanguage(newLanguage);
   };
 
-  useEffect(() => {
-    handleLanguageChange(language);
-  }, []);
+  // const handleLanguageChange = (newLanguage: string) => {
+  //   i18next.changeLanguage(newLanguage);
+  //   setTimeout(() => {
+  //     setLanguage(newLanguage);
+  //   }, 0);
+  // };
+
+  // useEffect(() => {
+  //   console.log('Language changed to: ', language);
+  // }, [language]);
 
   return (
     <View style={styles.container}>

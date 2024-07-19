@@ -11,7 +11,7 @@ const config = () => ({
             "bundler": "metro"
         },
         splash: {
-            image: './assets/images/splash.png',
+            image: './assets/images/partyQ.png',
             resizeMode: 'contain',
             backgroundColor: '#ffffff'
         },
@@ -26,7 +26,7 @@ const config = () => ({
             // }
         },
         android: {
-            icon: './assets/images/icon.png',
+            icon: './assets/images/tupaQ_icon_64x64.png',
             UIUserInterfaceStyle: 'Light',
             package: 'no.ruffy.tupaq',
             versionCode: 1,

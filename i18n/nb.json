@@ -4,5 +4,12 @@
     "gamesScreen": "Spill",
     "settings": "Innstillinger",
     "language": "Språk",
-    "quizScreen": "Quiz"
+    "quizScreen": "Quiz",
+    "quizInfoText": "Kommer snart!",
+    "mimicGame": "Mimeleken",
+    "mimicGameHeaderTitle": "Velkommen til MimeLeken",
+    "mimicGameHeaderText": "La moroa begynne",
+    "mimicGameInfoText": "Trykk på knappen og start mimingen",
+    "mimicButtonStartText": "Gå",
+    "karaoke": "Karaoke"
   }

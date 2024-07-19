@@ -1,0 +1,31 @@
+{
+    "easy_animals": [
+    "Cat", "Dog", "Cow", "Sheep", "Duck", "Chicken", "Horse", "Pig", "Frog", "Bird",
+    "Fish", "Rabbit", "Elephant", "Lion", "Tiger", "Bear", "Monkey", "Goat", "Wolf", "Mouse",
+    "Bee", "Ant", "Butterfly", "Horse", "Deer", "Fox", "Hedgehog", "Penguin", "Kangaroo", "Panda",
+    "Giraffe", "Zebra", "Owl", "Bat", "Eagle", "Hawk", "Falcon", "Sparrow", "Parrot", "Peacock",
+    "Turkey", "Goose", "Swan", "Rooster", "Hen", "Goat", "Lamb", "Calf", "Bull", "Ox",
+    "Donkey", "Mule", "Camel", "Dolphin", "Whale", "Shark", "Octopus", "Squid", "Crab", "Lobster",
+    "Jellyfish", "Starfish", "Seahorse", "Clownfish", "Goldfish", "Salmon", "Trout", "Tuna", "Marlin", "Swordfish",
+    "Seal", "Walrus", "Otter", "Beaver", "Raccoon", "Skunk", "Opossum", "Armadillo", "Sloth", "Koala",
+    "Crocodile", "Alligator", "Turtle", "Tortoise", "Snake", "Lizard", "Iguana", "Chameleon", "Gecko", "Frog",
+    "Toad", "Newt", "Salamander", "Flamingo", "Pelican", "Heron", "Stork", "Crane", "Cormorant", "Albatross",
+    "Pigeon", "Dove", "Magpie", "Raven", "Crow", "Squirrel", "Chipmunk", "Guinea Pig", "Hamster", "Gerbil",
+    "Ferret", "Weasel", "Mink", "Badger", "Wolverine", "Otter", "Panther", "Leopard", "Jaguar", "Cheetah",
+    "Hyena", "Jackal", "Dingo", "Bison", "Buffalo", "Moose", "Elk", "Reindeer", "Caribou", "Gazelle",
+    "Antelope", "Impala", "Kudu", "Gnu", "Warthog", "Peccary", "Tapir", "Capybara", "Porcupine", "Hedgehog",
+    "Armadillo", "Anteater", "Aardvark", "Aye-aye", "Bongo", "Bonobo", "Bushbaby", "Chinchilla", "Colobus", "Coati",
+    "Cuscus", "Dik-dik", "Duiker", "Echidna", "Galago", "Gerenuk", "Gorilla", "Gundi", "Howler Monkey", "Indri",
+    "Kinkajou", "Klipspringer", "Koala", "Lemur", "Mandrill", "Margay", "Meerkat", "Mongoose", "Marmoset", "Okapi",
+    "Olingo", "Opossum", "Orangutan", "Patagonian Mara", "Potto", "Proboscis Monkey", "Pygmy Marmoset", "Red Panda", "Ring-tailed Lemur", "Saki Monkey",
+    "Serval", "Sifaka", "Sitatunga", "Spectacled Bear", "Spider Monkey", "Squirrel Monkey", "Tamandua", "Tarsier", "Titi Monkey", "Tufted Capuchin",
+    "Uakari", "Vervet Monkey", "Woolly Monkey", "Yapok", "Zorilla", "Agouti", "Alpaca", "Anole", "Antechinus", "Axolotl",
+    "Bandicoot", "Bettong", "Binturong", "Brocket Deer", "Cacomistle", "Chevrotain", "Civet", "Coendou", "Cotton-top Tamarin", "Cuscus",
+    "Desman", "Dhole", "Dugong", "Eland", "Fennec Fox", "Fossa", "Gaur", "Genet", "Giant Panda", "Goral",
+    "Guereza", "Hartebeest", "Hippopotamus", "Hyrax", "Ili Pika", "Kangaroo Rat", "Kinkajou", "Kiwi", "Kowari", "Kudamundi",
+    "Linsang", "Manatee", "Markhor", "Muntjac", "Numbat", "Ocelot", "Oncilla", "Oribi", "Paca", "Pangolin",
+    "Patas Monkey", "Pudu", "Puma", "Quoll", "Rat Kangaroo", "Saiga", "Serow", "Snow Leopard", "Springhare", "Sugar Glider",
+    "Takin", "Tamaraw", "Tayra", "Tenrec", "Tree Kangaroo", "Vicuña", "Vole", "Water Buffalo", "Wombat", "Yak",
+    "Zebra Duiker", "Zebu"
+  ]
+}

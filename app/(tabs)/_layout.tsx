@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
@@ -8,6 +8,7 @@ import Colors from '@/constants/Colors';
 import { useColorScheme } from '@/components/useColorScheme';
 import { useClientOnlyValue } from '@/components/useClientOnlyValue';
 import i18next from '@/app/i18n';
+import { useLanguage } from '../LanguageContext';
 
 // You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
 function TabBarIcon(props: {
@@ -32,6 +33,11 @@ function TabBarMaterialCommunityIcon(props: {
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
+  const { language } = useLanguage();
+
+  useEffect(() => {
+    console.log("Language: ", language);
+  }, [language]);
 
   return (
     <Tabs

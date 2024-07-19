@@ -4,5 +4,12 @@
     "gamesScreen": "Gry",
     "settings": "Ustawienia",
     "language": "Jezyk",
-    "quizScreen": "Quiz"
+    "quizScreen": "Quiz",
+    "quizInfoText": "Wkrótce!",
+    "mimicGame": "Gra w Mimy",
+    "mimicGameHeaderTitle": "Witaj w Grze w Mimy",
+    "mimicGameHeaderText": "Niech zabawa się zacznie",
+    "mimicGameInfoText": "Naciśnij przycisk i zacznij naśladować",
+    "mimicButtonStartText": "Start",
+    "karaoke": "Karaoke"
 }

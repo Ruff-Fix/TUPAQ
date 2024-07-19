@@ -4,5 +4,12 @@
     "gamesScreen": "Games",
     "settings": "Settings",
     "language": "Language",
-    "quizScreen": "Quiz"
+    "quizScreen": "Quiz",
+    "quizInfoText": "Comming soon!",
+    "mimicGame": "The Mime Game",
+    "mimicGameHeaderTitle": "Welcome to the Mime Game",
+    "mimicGameHeaderText": "Let the fun begin",
+    "mimicGameInfoText": "Push the button and start the mimicry",
+    "mimicButtonStartText": "Go",
+    "karaoke": "Karaoke"
   }

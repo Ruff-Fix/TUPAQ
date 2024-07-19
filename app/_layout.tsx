@@ -5,10 +5,9 @@ import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 import * as React from 'react';
-// import { I18nManager } from 'react-native';
 import 'react-native-reanimated';
 import { useColorScheme } from '@/components/useColorScheme';
-// import i18n from './i18n';
+import  { LanguageProvider } from './LanguageContext';
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -51,11 +50,14 @@ function RootLayoutNav() {
   const colorScheme = useColorScheme();
 
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="SettingsModal" options={{ presentation: 'modal' }} />
-      </Stack>
-    </ThemeProvider>
+    <LanguageProvider>
+      <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+        <Stack>
+          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          <Stack.Screen name="SettingsModal" options={{ presentation: 'modal' }} />
+          <Stack.Screen name="GameMimic" options={{ headerShown: true }} />
+        </Stack>
+      </ThemeProvider>
+    </LanguageProvider>
   );
 }
