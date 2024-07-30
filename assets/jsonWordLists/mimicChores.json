@@ -1,0 +1,24 @@
+{
+    "mimicChores": [
+        {"en": "Gardening", "no": "Hagearbeid", "pl": "Ogrodnictwo"},
+        {"en": "Vacuuming", "no": "Støvsuging", "pl": "Odkurzanie"},
+        {"en": "Taking out the trash", "no": "Ta ut søppelet", "pl": "Wynoszenie śmieci"},
+        {"en": "Pulling weeds", "no": "Luke ugress", "pl": "Pielenie chwastów"},
+        {"en": "Cleaning", "no": "Rengjøring", "pl": "Sprzątanie"},
+        {"en": "Cutting the grass", "no": "Klippe gresset", "pl": "Koszenie trawy"},
+        {"en": "Doing laundry", "no": "Vaske klær", "pl": "Pranie"},
+        {"en": "Emptying the dishwasher", "no": "Tømme oppvaskmaskinen", "pl": "Opróżnianie zmywarki"},
+        {"en": "Sweeping", "no": "Feie", "pl": "Zamiatanie"},
+        {"en": "Setting the table", "no": "Dekke bordet", "pl": "Nakrywanie do stołu"},
+        {"en": "Washing dishes", "no": "Vaske opp", "pl": "Zmywanie naczyń"},
+        {"en": "Making the bed", "no": "Re sengen", "pl": "Ścielenie łóżka"},
+        {"en": "Walking the dog", "no": "Gå tur med hunden", "pl": "Wyprowadzanie psa"},
+        {"en": "Feeding the cat", "no": "Mate katten", "pl": "Karmienie kota"},
+        {"en": "Washing the car", "no": "Vaske bilen", "pl": "Mycie samochodu"},
+        {"en": "Dusting", "no": "Støvtørking", "pl": "Odkurzanie"},
+        {"en": "Folding clothes", "no": "Brette klær", "pl": "Składanie ubrań"},
+        {"en": "Cooking", "no": "Lage mat", "pl": "Gotowanie"},
+        {"en": "Watering plants", "no": "Vanne planter", "pl": "Podlewanie roślin"},
+        {"en": "Washing windows", "no": "Vaske vinduer", "pl": "Mycie okien"}
+    ]
+}

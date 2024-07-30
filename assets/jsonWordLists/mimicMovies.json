@@ -1,0 +1,29 @@
+{
+    "mimicMovies": [
+        {"en": "Up", "no": "Opp", "pl": "Odlot"},
+        {"en": "Fight Club", "no": "Fight Club", "pl": "Podziemny krąg"},
+        {"en": "Jaws", "no": "Haisommer", "pl": "Szczęki"},
+        {"en": "Ran", "no": "Ran", "pl": "Ran"},
+        {"en": "Back to the Future", "no": "Tilbake til fremtiden", "pl": "Powrót do przyszłości"},
+        {"en": "Home", "no": "Hjem", "pl": "Dom"},
+        {"en": "2 Guns", "no": "2 Guns", "pl": "2 Guns"},
+        {"en": "The Lord of the Rings", "no": "Ringenes herre", "pl": "Władca Pierścieni"},
+        {"en": "Jurassic Park", "no": "Jurassic Park", "pl": "Park Jurajski"},
+        {"en": "Man of Steel", "no": "Stålmannen", "pl": "Człowiek ze stali"},
+        {"en": "The Hunchback of Notre Dame", "no": "Ringeren i Notre Dame", "pl": "Dzwonnik z Notre Dame"},
+        {"en": "Star Wars", "no": "Star Wars", "pl": "Gwiezdne wojny"},
+        {"en": "Cars", "no": "Biler", "pl": "Auta"},
+        {"en": "The Jungle Book", "no": "Jungelboken", "pl": "Księga dżungli"},
+        {"en": "Seven", "no": "Seven", "pl": "Siedem"},
+        {"en": "First Man", "no": "First Man", "pl": "Pierwszy człowiek"},
+        {"en": "The Godfather", "no": "Gudfaren", "pl": "Ojciec chrzestny"},
+        {"en": "Good Boys", "no": "Good Boys", "pl": "Grzeczni chłopcy"},
+        {"en": "Spider-Man", "no": "Spider-Man", "pl": "Spider-Man"},
+        {"en": "Tenet", "no": "Tenet", "pl": "Tenet"},
+        {"en": "Marriage Story", "no": "Marriage Story", "pl": "Historia małżeńska"},
+        {"en": "Airplane!", "no": "Hjelp, vi flyr!", "pl": "Czy leci z nami pilot?"},
+        {"en": "Monsters Inc.", "no": "Monsters, Inc.", "pl": "Potwory i spółka"},
+        {"en": "It", "no": "Det", "pl": "To"},
+        {"en": "Taxi Driver", "no": "Taxi Driver", "pl": "Taksówkarz"}
+    ]
+}

@@ -1,0 +1,29 @@
+{
+    "mimicActions": [
+        {"en": "Learning", "no": "Læring", "pl": "Nauka"},
+        {"en": "Paddle boarding", "no": "Padlebrett", "pl": "Pływanie na desce z wiosłem"},
+        {"en": "Cycling a tricycle", "no": "Sykle en trehjulssykkel", "pl": "Jazda na trójkołowym rowerze"},
+        {"en": "Watching a Romantic Comedy", "no": "Se en romantisk komedie", "pl": "Oglądanie komedii romantycznej"},
+        {"en": "Doing the Backstroke", "no": "Svømme ryggsvømming", "pl": "Pływanie stylem grzbietowym"},
+        {"en": "Running on a treadmill", "no": "Løpe på en tredemølle", "pl": "Bieganie na bieżni"},
+        {"en": "Flying in first class", "no": "Fly på første klasse", "pl": "Latanie pierwszą klasą"},
+        {"en": "Sleeping in a hammock", "no": "Sove i en hengekøye", "pl": "Spanie w hamaku"},
+        {"en": "Cooking meat", "no": "Lage kjøtt", "pl": "Gotowanie mięsa"},
+        {"en": "Listening to classical music", "no": "Lytte til klassisk musikk", "pl": "Słuchanie muzyki klasycznej"},
+        {"en": "Driving a go kart", "no": "Kjøre en gokart", "pl": "Jazda gokartem"},
+        {"en": "Writing a letter of complaint", "no": "Skrive et klagebrev", "pl": "Pisanie listu ze skargą"},
+        {"en": "Tobogganing", "no": "Ake på kjelke", "pl": "Zjeżdżanie na sankach"},
+        {"en": "Flying a drone", "no": "Fly en drone", "pl": "Latanie dronem"},
+        {"en": "Winning an award", "no": "Vinne en pris", "pl": "Wygrywanie nagrody"},
+        {"en": "Gardening", "no": "Hagearbeid", "pl": "Ogrodnictwo"},
+        {"en": "Sailing", "no": "Seile", "pl": "Żeglowanie"},
+        {"en": "Acting on stage", "no": "Opptre på scenen", "pl": "Granie na scenie"},
+        {"en": "Playing the cowbell", "no": "Spille kubjelle", "pl": "Granie na krowim dzwonku"},
+        {"en": "Pretending to be surprised", "no": "Late som man er overrasket", "pl": "Udawanie zaskoczenia"},
+        {"en": "Putting on a wig", "no": "Ta på en parykk", "pl": "Zakładanie peruki"},
+        {"en": "Wrestling", "no": "Bryting", "pl": "Zapasy"},
+        {"en": "Watching YouTube", "no": "Se på YouTube", "pl": "Oglądanie YouTube"},
+        {"en": "Teaching a language", "no": "Undervise i et språk", "pl": "Nauczanie języka"},
+        {"en": "Having a bath", "no": "Ta et bad", "pl": "Branie kąpieli"}
+    ]
+}

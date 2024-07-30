@@ -1,0 +1,24 @@
+{
+    "mimicProfessions": [
+        {"en": "Farming", "no": "Jordbruk", "pl": "Rolnictwo"},
+        {"en": "Firefighting", "no": "Brannslukking", "pl": "Strażactwo"},
+        {"en": "Coding", "no": "Koding", "pl": "Programowanie"},
+        {"en": "Working in a warehouse", "no": "Jobbe i et lager", "pl": "Praca w magazynie"},
+        {"en": "Piloting", "no": "Flyging", "pl": "Pilotowanie"},
+        {"en": "Carpenting", "no": "Snekring", "pl": "Stolarstwo"},
+        {"en": "Forklift driving", "no": "Truckkjøring", "pl": "Jazda wózkiem widłowym"},
+        {"en": "Selling", "no": "Salg", "pl": "Sprzedawanie"},
+        {"en": "Lawyering", "no": "Advokatvirksomhet", "pl": "Prawnictwo"},
+        {"en": "Teaching", "no": "Undervisning", "pl": "Nauczanie"},
+        {"en": "Truck driving", "no": "Lastebilkjøring", "pl": "Kierowanie ciężarówką"},
+        {"en": "Engineering", "no": "Ingeniørarbeid", "pl": "Inżynieria"},
+        {"en": "Groundskeeping", "no": "Vaktmesterarbeid", "pl": "Konserwacja terenu"},
+        {"en": "Housekeeping", "no": "Husarbeid", "pl": "Sprzątanie"},
+        {"en": "Electritioning", "no": "Elektrikerarbeid", "pl": "Elektryka"},
+        {"en": "Plumbing", "no": "Rørleggerarbeid", "pl": "Hydraulika"},
+        {"en": "Bartending", "no": "Bartenderarbeid", "pl": "Barmanstwo"},
+        {"en": "Managing", "no": "Ledelse", "pl": "Zarządzanie"},
+        {"en": "Waitering", "no": "Servering", "pl": "Kelnerstwo"},
+        {"en": "Marketing", "no": "Markedsføring", "pl": "Marketing"}
+    ]
+}

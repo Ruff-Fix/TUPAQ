@@ -1,5 +1,9 @@
 {
     "appName": "TUPAQ",
+    "firstTimeWelcomeScreenTitle": "Velkommen til TupaQ",
+    "firstTimeWelcomeScreenDescription": "Gjør deg klar for en fantastisk opplevelse",
+    "firstTimeWelcomeScreenInfo": "I øvre høyre hjørne finner du ulike innstillinger. Endre ditt foretrukne språk, farger og til og med registrer deg og kjøp premiumversjonen av TupaQ med mer voksent innhold",
+    "firstTimeWelcomeScreenButtonText": "Fortsett",
     "homeScreen": "Hjem",
     "gamesScreen": "Spill",
     "settings": "Innstillinger",
@@ -11,5 +15,13 @@
     "mimicGameHeaderText": "La moroa begynne",
     "mimicGameInfoText": "Trykk på knappen og start mimingen",
     "mimicButtonStartText": "Gå",
+    "mimicAnimalsCategoryButtonText": "Dyr",
+    "mimicActionsCategoryButtonText": "Handlinger",
+    "mimicMoviesCategoryButtonText": "Filmer",
+    "mimicProfessionsCategoryButtonText": "Yrker",
+    "mimicChoresCategoryButtonText": "Husarbeid",
+    "mimicAllCategoryButtonText": "Alle",
+    "mimicChooseCategoryText": "Velg dine kategorier",
+    "selectCategoryAlert": "Vennligst velg minst én kategori",
     "karaoke": "Karaoke"
   }

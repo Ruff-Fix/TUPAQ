@@ -1,5 +1,9 @@
 {
     "appName": "TUPAQ",
+    "firstTimeWelcomeScreenTitle": "Witaj w TupaQ",
+    "firstTimeWelcomeScreenDescription": "Przygotuj się na niesamowite doświadczenie",
+    "firstTimeWelcomeScreenInfo": "W prawym górnym rogu znajdziesz różne ustawienia. Zmień preferowany język, kolory, a nawet zarejestruj się i kup wersję premium TupaQ z większą ilością treści dla dorosłych",
+    "firstTimeWelcomeScreenButtonText": "Kontynuuj",
     "homeScreen": "Strona główna",
     "gamesScreen": "Gry",
     "settings": "Ustawienia",
@@ -11,5 +15,13 @@
     "mimicGameHeaderText": "Niech zabawa się zacznie",
     "mimicGameInfoText": "Naciśnij przycisk i zacznij naśladować",
     "mimicButtonStartText": "Start",
+    "mimicAnimalsCategoryButtonText": "Zwierzęta",
+    "mimicActionsCategoryButtonText": "Akcje",
+    "mimicMoviesCategoryButtonText": "Filmy",
+    "mimicProfessionsCategoryButtonText": "Zawody",
+    "mimicAllCategoryButtonText": "Wszystkie",
+    "mimicChooseCategoryText": "Wybierz swoje kategorie",
+    "mimicChoresCategoryButtonText": "Prace domowe",
+    "selectCategoryAlert": "Proszę wybrać przynajmniej jedną kategorię",
     "karaoke": "Karaoke"
 }
