@@ -16,7 +16,8 @@ const FirstTimeWelcomeScreen = () => {
     // return <Redirect href="/(tabs)" />;
     const router = useRouter();
     const { language } = useLanguage();
-    const [isFirstTime, setIsFirstTime] = useState(true);
+    const [isFirstTime, setIsFirstTime] = useState(false);
+    const [ loading, setLoading ] = useState(true);
 
     useEffect(() => {
         checkFirstTimeUser();
@@ -25,12 +26,15 @@ const FirstTimeWelcomeScreen = () => {
     const checkFirstTimeUser = async () => {
         try {
             const value = await AsyncStorage.getItem('@first_time_user');
-            if (value!== null) {
-                setIsFirstTime(false);
+            if (value !== null) {
                 router.replace('/(tabs)');
+            } else {
+                setIsFirstTime(true);
             }
         } catch (error) {
             console.error('Error checking first time user', error);
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -43,9 +47,16 @@ const FirstTimeWelcomeScreen = () => {
         }
     };
 
+    if (loading) {
+        return (
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+            <Text>{i18next.t('loading')}</Text>
+        </View> );
+    }
+
     if (!isFirstTime) {
         return null;
-    };
+    }
 
     return (
         <View>

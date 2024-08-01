@@ -26,12 +26,12 @@ const config = () => ({
             // }
         },
         android: {
-            icon: './assets/images/tupaQ_icon_64x64.png',
+            icon: './assets/images/TupaQ-alt-icon.png',
             UIUserInterfaceStyle: 'Light',
             package: 'no.ruffy.tupaq',
             versionCode: 1,
             adaptiveIcon: {
-                foregroundImage: './assets/images/adaptive-icon.png',
+                foregroundImage: './assets/images/TupaQ-alt-icon.png',
                 backgroundColor: '#ffffff'
             },
             // googleServicesFile: './google-services.json',
@@ -41,6 +41,7 @@ const config = () => ({
             'expo-router',
             'expo-font',
             'expo-localization',
+            'react-native-video',
         ],
         extra: {
             eas: {
