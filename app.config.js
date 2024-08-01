@@ -42,6 +42,12 @@ const config = () => ({
             'expo-font',
             'expo-localization',
             'react-native-video',
+            [
+                'expo-asset',
+                {
+                    assets: ['./assets/*']
+                }
+            ]
         ],
         extra: {
             eas: {
