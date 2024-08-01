@@ -7,7 +7,8 @@ import YouTube from 'react-native-youtube';
 import AudioRecorderPlayer from 'react-native-audio-recorder-player';
 import { PitchDetector } from 'pitchy';
 import { karaokeVideos } from '../components/karaokeVideos';
-import { YOUTUBE_API_KEY } from '@/config';
+import Constants from 'expo-constants';
+const youtubeApiKey = Constants.expoConfig?.extra?.youtubeApiKey || '';
 
 type KaraokeVideos = {
     id: string;
@@ -124,7 +125,7 @@ const GameKaraoke = () => {
                 <>
                     <YouTube
                         ref={youtubeRef}
-                        apiKey={YOUTUBE_API_KEY}
+                        apiKey={youtubeApiKey}
                         videoId={selectedVideo.id}
                         play={true}
                         fullscreen={false}
