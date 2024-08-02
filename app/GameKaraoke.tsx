@@ -3,13 +3,11 @@ import { View, Text } from "@/components/Themed";
 import { useLanguage } from "./LanguageContext";
 import i18next from "@/app/i18n";
 import { StyleSheet, FlatList, TouchableOpacity, Button } from "react-native";
-import YouTube from 'react-native-youtube';
-// import AudioRecorderPlayer from 'react-native-audio-recorder-player';
 // import { PitchDetector } from 'pitchy';
 // import { karaokeVideos } from '../components/karaokeVideos';
-import Constants from 'expo-constants';
+// import Constants from 'expo-constants';
 // import { karaokeVideos } from '@/components/karaokeVideos';
-const youtubeApiKey = Constants.expoConfig?.extra?.youtubeApiKey || '';
+// const youtubeApiKey = Constants.expoConfig?.extra?.youtubeApiKey;
 
 // const dummyKaraokeVideos = [
 //     { id: 'M7Qg5H0luo0', title: 'Adele - Easy On Me' },
@@ -173,7 +171,6 @@ const GameKaraoke = () => {
     // const [selectedVideo, setSelectedVideo] = useState(null);
     // const [score, setScore] = useState(0);
     // const [isRecording, setIsRecording] = useState(false);
-    const youtubeRef = useRef(null);
 
     // useEffect(() => {
     //     return () => {
@@ -216,41 +213,6 @@ const GameKaraoke = () => {
     return (
         <View style={styles.container}>
             <Text style={styles.title}>{i18next.t('karaoke')}</Text>
-            <YouTube
-                        ref={youtubeRef}
-                        apiKey={youtubeApiKey}
-                        videoId="M7Qg5H0luo0"
-                        play={true}
-                        fullscreen={false}
-                        loop={false}
-                        // onError={(e) => Alert.alert('YouTube Error', `Error: ${e.error}`)}
-                        style={{ alignSelf: 'stretch', height: 200 }}
-                    />
-            {/* {selectedVideo ? (
-                <>
-                    <YouTube
-                        ref={youtubeRef}
-                        apiKey={youtubeApiKey}
-                        videoId="M7Qg5H0luo0"
-                        play={true}
-                        fullscreen={false}
-                        loop={false}
-                        // onError={(e) => Alert.alert('YouTube Error', `Error: ${e.error}`)}
-                        style={{ alignSelf: 'stretch', height: 200 }}
-                    />
-                    <Button 
-                        title={isRecording ? "Stop Singing" : "Start Singing"} 
-                        onPress={isRecording ? stopRecording : startRecording} 
-                    />
-                    <Text style={styles.score}>Score: {Math.round(score)}</Text>
-                </>
-            ) : (
-                <FlatList
-                    data={dummyKaraokeVideos}
-                    renderItem={renderItem}
-                    keyExtractor={item => item.id}
-                />
-            )} */}
         </View>
     );
 }

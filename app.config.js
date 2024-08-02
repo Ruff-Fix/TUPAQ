@@ -41,7 +41,6 @@ const config = () => ({
             'expo-router',
             'expo-font',
             'expo-localization',
-            'react-native-video',
         ],
         extra: {
             eas: {
