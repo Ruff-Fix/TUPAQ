@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React  from 'react';
 import { View, Text } from "@/components/Themed";
 import { useLanguage } from "./LanguageContext";
 import i18next from "@/app/i18n";
-import { StyleSheet, FlatList, TouchableOpacity, Button } from "react-native";
+import { StyleSheet} from "react-native";
 // import { PitchDetector } from 'pitchy';
 // import { karaokeVideos } from '../components/karaokeVideos';
 // import Constants from 'expo-constants';
