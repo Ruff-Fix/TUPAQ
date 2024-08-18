@@ -47,6 +47,7 @@ const config = () => ({
                 projectId: 'e6a96069-070f-4b64-9bc1-49bfc7ab2110'
             },
             environment: process.env.ENVIRONMENT,
+            youtubeApiKey: process.env.YOUTUBE_API_KEY,
         },
     },
 });
