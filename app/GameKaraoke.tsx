@@ -2,34 +2,40 @@ import React, { useEffect, useState, useRef } from 'react';
 import { View, Text } from "@/components/Themed";
 import { useLanguage } from "./LanguageContext";
 import i18next from "@/app/i18n";
-import { Button, StyleSheet, TouchableOpacity, FlatList } from "react-native";
+import { Button, StyleSheet, TouchableOpacity, FlatList, ScrollView, ActivityIndicator } from "react-native";
 import * as Pitchy from 'pitchy';
 import { Audio, ResizeMode, Video } from 'expo-av';
 import { EssentiaWASM } from 'essentia.js';
 import { karaokeVideos } from '../components/karaokeVideos';
-import { google } from 'googleapis';
 import Constants from 'expo-constants';
-const youtubeApiKey = Constants.expoConfig?.extra?.youtubeApiKey;
+// const vimeoApiKey = Constants.expoConfig?.extra?.vimeoApiKey
+// import YoutubePlayer from "react-native-youtube-iframe";
+// import { ScrollView } from 'react-native-reanimated/lib/typescript/Animated';
+// const youtubeApiKey = Constants.expoConfig?.extra?.youtubeApiKey;
 
-const youtube = google.youtube({
-    version: 'v3',
-    auth: youtubeApiKey,
-  });
-
-// const dummyKaraokeVideos = [
-//     { id: 'M7Qg5H0luo0', title: 'Adele - Easy On Me' },
-//     { id: 'dQw4w9WgXcQ', title: 'Rick Astley - Never Gonna Give You Up' },
-// ]
-
-// type KaraokeVideos = {
-//     id: string;
-//     title: string;
-//     lrcFile: string;
-// };
+interface VimeoFile {
+    quality: string;
+    link: string;
+  }
+  
+  interface VimeoSize {
+    width: number;
+    link: string;
+  }
+  
+  interface VimeoResponse {
+    files: VimeoFile[];
+    pictures: {
+      sizes: VimeoSize[];
+    };
+  }
 
 type KaraokeVideos = {
     id: string;
+    // artist: string;
     title: string;
+    // thumbnail: string;
+    url: string | undefined;
 };
 
 type Lyric = {
@@ -37,6 +43,84 @@ type Lyric = {
     lyric: string;
     note: string | null;
 };
+
+// type VimeoLinkData = {
+//     videoUrl: string | undefined;
+//     thumbnailUrl: string | undefined;
+//   };
+
+// async function getVimeoLinks(videoId: string): Promise<VimeoLinkData> {
+//     try {
+//       const response = await fetch(`https://api.vimeo.com/videos/${videoId}`, {
+//         headers: {
+//           'Authorization': `bearer ${vimeoApiKey}`,
+//           'Content-Type': 'application/json',
+//         },
+//       });
+  
+//       if (!response.ok) {
+//         throw new Error(`HTTP error! status: ${response.status}`);
+//       }
+
+//       const data = await response.json() as VimeoResponse;
+  
+//       console.log('Full Vimeo API response:', JSON.stringify(data, null, 2));
+  
+//       const videoUrl = data.files.find(file => file.quality === 'hd')?.link;
+//       const thumbnailUrl = data.pictures.sizes.find(size => size.width === 640)?.link;
+//       return { videoUrl, thumbnailUrl };
+//   } catch (error) {
+//     console.error('Error fetching Vimeo data:', error);
+//     return { videoUrl: undefined, thumbnailUrl: undefined };
+//   }
+// }
+
+// function getVimeoLinks(url: string) {
+//     return fetch(`https://player.vimeo.com/video/${url}/config`, {
+//         headers: {
+//           'Authorization': `bearer ${vimeoAccessToken}`,
+//           'Content-Type': 'application/json',
+//         },
+//       })
+//       .then(r => r.json())
+//       .then(r => 
+//         r.request.files.progressive as {
+//           profile: number;
+//           width: number;
+//           mime: string;
+//           fps: number;
+//           url: string;
+//           cdn: string;
+//           quality: string;
+//           id: number;
+//           origin: string;
+//           height: number;
+//         }[]
+//       )
+//       .catch(error => {
+//         console.error('Error fetching Vimeo links:', error);
+//         return [];
+//       });
+// }
+
+// function useVimeoUrl(url: string) {
+//     const [vimeoUrl, setVimeoUrl] = useState<string | undefined>();
+  
+//     useEffect(() => {
+//       getVimeoLinks(url).then(linkData => {
+//         if (linkData && linkData.videoUrl) {
+//           setVimeoUrl(linkData.videoUrl);
+//         }
+//       });
+//     }, [url]);
+  
+//     return vimeoUrl;
+//   }
+
+interface VimeoVideo {
+    link_secure: string;
+    quality: string;
+}
 
 const GameKaraoke: React.FC = () => {
     const [isRecording, setIsRecording] = useState<boolean>(false);
@@ -47,45 +131,68 @@ const GameKaraoke: React.FC = () => {
     const [selectedVideo, setSelectedVideo] = useState<KaraokeVideos | null>(null);
     const lyricsRef = useRef<Lyric[]>([]);
     const currentLyricIndex = useRef<number>(0);
-    const [streamUrl, setStreamUrl] = useState<string | null>(null);
+    // const vimeoUrl = useVimeoUrl(selectedVideo?.url || '');
+    const [videoUrl, setVideoUrl] = useState<string | null>(null);
+    const [loading, setLoading] = useState<boolean>(true);
+    const videoId = selectedVideo?.url;
 
-    const getVideoStreamUrl = async (videoId: string) => {
-        try {
-          const response = await youtube.videos.list({
-            part: ['player'],
-            id: [videoId]
-          });
-          const playerHtml = response.data.items?.[0]?.player?.embedHtml ??  '';
-          // Extract the stream URL from the player HTML
-          // This is a simplified example and may need adjustment
-          const match = playerHtml.match(/src="([^"]+)"/);
-          return match ? match[1] : null;
-        } catch (error) {
-          console.error('Error fetching video details:', error);
-          return null;
-        }
-      };
+    const vimeoApiKey = Constants.expoConfig?.extra?.vimeoApiKey || process.env.VIMEO_ACCESS_TOKEN;
     
 
     useEffect(() => {
-        if (selectedVideo) {
-            getVideoStreamUrl(selectedVideo.id)
-            .then(url => {
-                if (url) {
-                    setStreamUrl(url);
-                }
-            })
-            .catch(error => {
-                console.error('Error fetching video stream URL:', error);
-            });
-        }
         // loadAudio();
         return () => {
           if (isRecording) {
             stopRecording();
           }
         };
-      }, [selectedVideo]);
+      }, []);
+    
+      useEffect(() => {
+        const fetchVideoUrl = async () => {
+          try {
+            console.log('Expo Config Extra: ', Constants.expoConfig?.extra);
+            console.log('Vimeo API key: ', vimeoApiKey);
+            const response = await fetch(`https://api.vimeo.com/videos/${videoId}`, {
+              headers: {
+                Authorization: `Bearer ${Constants.expoConfig?.extra?.vimeoApiKey}`, // Ensure this matches your environment setup
+              },
+            });
+    
+            if (!response.ok) {
+              throw new Error('Failed to fetch video details');
+            }
+    
+            const data = await response.json();
+            
+            // Ensure the 'files' property is of type 'VimeoVideo[]'
+            const videoFiles: VimeoVideo[] = data.files;
+            const videoFile = videoFiles.find(
+              (file) => file.quality === 'hd' && file.link_secure
+            );
+    
+            setVideoUrl(videoFile ? videoFile.link_secure : null);
+          } catch (error) {
+            console.error('Error fetching video URL:', error);
+          } finally {
+            setLoading(false);
+          }
+        };
+    
+        fetchVideoUrl();
+      }, [videoId]);
+    
+      if (loading) {
+        return <ActivityIndicator size="large" color="#9000ff" />;
+      }
+    
+      if (!videoUrl) {
+        return (
+          <View>
+            <Text>Video not available</Text>
+          </View>
+        );
+      }
     
     //   const loadAudio = async (): Promise<void> => {
     //     const { sound } = await Audio.Sound.createAsync(
@@ -146,47 +253,77 @@ const GameKaraoke: React.FC = () => {
       };
 
       const renderItem = ({ item }: { item: KaraokeVideos }) => (
-        <TouchableOpacity onPress={() => setSelectedVideo(item)}>
+        <TouchableOpacity onPress={() => setSelectedVideo(item)} style={styles.videoItem}>
             <Text style={styles.videoTitle}>{item.title}</Text>
         </TouchableOpacity>
     );
 
       return (
         <View style={styles.container}>
-          <Text style={styles.title}>{i18next.t('karaoke')}</Text>
-          <View style={styles.videoContainer}>
-            {selectedVideo ? (
-                <>
-                { streamUrl && (
-                    <Video
-                        ref={videoRef}
-                        // source={{ uri: `https://www.youtube.com/embed/${selectedVideo.id}` }}
-                        source={{ uri: `https://www.youtube.com/watch?v=${selectedVideo.id}` }}
-                        style={{ width: 300, height: 200 }}
-                        useNativeControls
-                        resizeMode={ResizeMode.CONTAIN}
-                        isLooping
-                        onError={(error) => console.error('Video Error:', error)}
-                    />
-                )}
-                    
-                    <Button 
-                        title={isRecording ? "Stop Singing" : "Start Singing"} 
-                        onPress={isRecording ? stopRecording : startRecording} 
-                    />
-                </> ) : (
-                <>
-                    <FlatList
-                        data={karaokeVideos}
-                        renderItem={renderItem}
-                        keyExtractor={item => item.id}
-                    />
-                    <Text>Score: {score}</Text>
-                </>
+            <Text style={styles.title}>{i18next.t('karaoke')}</Text>
+            <View style={styles.videoContainer}>
+            {videoUrl && (
+                <Video
+                    source={{ uri: videoUrl }}
+                    useNativeControls
+                    // resizeMode={'contain'}
+                    style={{ width: 300, height: 200 }}
+                />
             )}
+            </View>
+            <View style={styles.videosListContainer}>
+                <FlatList
+                    data={karaokeVideos}
+                    renderItem={renderItem}
+                    keyExtractor={(item) => item.id}
+                    style={styles.videosList}
+                    ItemSeparatorComponent={() => <View style={styles.separator} />}
+                />
+                <Button 
+                    title={isRecording ? "Stop Singing" : "Start Singing"} 
+                    onPress={isRecording ? stopRecording : startRecording} 
+                />
+                <Text>Score: {score}</Text>
+            </View>
             
-          </View>
-          
+                {/* {selectedVideo ? (
+                    <>
+                        <YoutubePlayer
+                            height={200}
+                            width={300}
+                            play={true}
+                            videoId={selectedVideo.id}
+                            onReady={() => setIsRecording(false)}
+                            forceAndroidAutoplay
+                            initialPlayerParams={{
+                                preventFullScreen: true,
+                                controls: false,
+                                modestbranding: true,
+                                rel: false,
+                                start: 1,
+                                // contentCheckOk: true,
+                                iv_load_policy: 3
+                            }}
+                            webViewProps={{
+                                androidLayerType: 'hardware',
+                            }}
+                            onError={(error) => console.error("YouTube Player Error:", error)}
+                        />
+                        
+                        <Button 
+                            title={isRecording ? "Stop Singing" : "Start Singing"} 
+                            onPress={isRecording ? stopRecording : startRecording} 
+                        />
+                    </> ) : (
+                    <>
+                        <FlatList
+                            data={karaokeVideos}
+                            renderItem={renderItem}
+                            keyExtractor={item => item.id}
+                        />
+                        <Text>Score: {score}</Text>
+                    </>
+                )} */}
         </View>
       );
 };
@@ -203,15 +340,6 @@ const GameKaraoke: React.FC = () => {
 //     const lyricsRef = useRef<Lyric[]>([]);
 //     const currentLyricIndex = useRef<number>(0);
 
-//     // useEffect(() => {
-//     //     if (selectedVideo) {
-//     //         fetch(selectedVideo.lrcFile)
-//     //             .then(response => response.text())
-//     //             .then(text => {
-//     //                 lyricsRef.current = parseLRC(text);
-//     //             });
-//     //     }
-//     // }, [selectedVideo]);
 
 //     const parseLRC = (lrcContent: string) => {
 //         const lines = lrcContent.split('\n');
@@ -281,53 +409,11 @@ const GameKaraoke: React.FC = () => {
 //         return A4 * Math.pow(2, halfSteps / 12);
 //     };
 
-//     // const renderItem = ({ item }: { item: KaraokeVideos }) => (
-//     //     <TouchableOpacity onPress={() => setSelectedVideo(item)}>
-//     //         <Text style={styles.videoTitle}>{item.title}</Text>
-//     //     </TouchableOpacity>
-//     // );
-
-//     const renderItem = ({ item }: { item: { id: string; title: string } }) => (
-//         <TouchableOpacity onPress={() => setSelectedVideo(item)}>
-//           <Text style={styles.videoTitle}>{item.title}</Text>
-//         </TouchableOpacity>
-//     );
-
-//     return (
-//         <View style={styles.container}>
-//             <Text style={styles.title}>{i18next.t('karaoke')}</Text>
-//             {selectedVideo ? (
-//                 <>
-//                     <YouTube
-//                         ref={youtubeRef}
-//                         apiKey={youtubeApiKey}
-//                         videoId={selectedVideo.id}
-//                         play={true}
-//                         fullscreen={false}
-//                         loop={false}
-//                         style={{ alignSelf: 'stretch', height: 200 }}
-//                     />
-//                     <Button 
-//                         title={isRecording ? "Stop Singing" : "Start Singing"} 
-//                         onPress={isRecording ? stopRecording : startRecording} 
-//                     />
-//                     <Text style={styles.score}>Score: {Math.round(score)}</Text>
-//                 </>
-//             ) : (
-//                 <FlatList
-//                     // data={karaokeVideos}
-//                     data={dummyKaraokeVideos}
-//                     renderItem={renderItem}
-//                     keyExtractor={item => item.id}
-//                 />
-//             )}
-//         </View>
-//     );
-// }
-
 const styles = StyleSheet.create({
     container: {
         display: 'flex',
+        width: '100%',
+        height: '100%',
         alignItems: 'center',
         justifyContent: 'center',
     },
@@ -346,11 +432,34 @@ const styles = StyleSheet.create({
         fontSize: 18,
         padding: 10,
     },
+    videosListContainer: {
+        width: '90%',
+        height: '40%',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    videosList: {
+        display: 'flex',
+        width: '100%',
+        borderWidth: 1,
+        borderColor: 'gray',
+        borderRadius: 5,
+        margin: 10,
+    },
+    videoItem: {
+        flexDirection: 'row',
+        padding: 10,
+        alignItems: 'center',
+    },
     score: {
         fontSize: 20,
         fontWeight: 'bold',
         marginTop: 20,
-    }
+    },
+    separator: {
+        height: 1,
+        backgroundColor: '#ccc',
+    },
 });
 
 export default GameKaraoke;

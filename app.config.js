@@ -1,3 +1,5 @@
+import 'dotenv/config';
+
 const config = () => ({
     expo: {
         name: 'TUPAQ',
@@ -48,6 +50,7 @@ const config = () => ({
             },
             environment: process.env.ENVIRONMENT,
             youtubeApiKey: process.env.YOUTUBE_API_KEY,
+            vimeoApiKey: process.env.VIMEO_ACCESS_TOKEN,
         },
     },
 });
