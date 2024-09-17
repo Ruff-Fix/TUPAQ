@@ -18,14 +18,13 @@ const config = () => ({
             backgroundColor: '#ffffff'
         },
         ios: {
-            // icon: './assets/images/icon.png',
-            // bundleIdentifier: 'no.ruffy.tupaq',
-            // googleServicesFile: './GoogleService-Info.plist',
-            // buildNumber: '1',
-            // infoPlist: {
-            //     UIUserInterfaceStyle: 'Light',
-            //     CFBundleDevelopmentRegion: 'nbNO',
-            // }
+            icon: './assets/images/TupaQ-alt-icon.png',
+            bundleIdentifier: 'com.yourname.tupaq',
+            buildNumber: '1',
+            infoPlist: {
+                UIUserInterfaceStyle: 'Light',
+                CFBundleDevelopmentRegion: 'nbNO',
+            }
         },
         android: {
             icon: './assets/images/TupaQ-alt-icon.png',
