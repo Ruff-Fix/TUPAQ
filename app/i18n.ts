@@ -3,7 +3,6 @@ import { initReactI18next } from 'react-i18next';
 import en from '@/i18n/en.json';
 import nb from '@/i18n/nb.json';
 import pl from '@/i18n/pl.json';
-import { Platform } from 'react-native';
 
 const resources = {
   en: { translation: en },
@@ -12,10 +11,10 @@ const resources = {
 };
 
 i18n.use(initReactI18next).init({
-  compatibilityJSON: Platform.OS === 'android' ? 'v3' : undefined,
+  compatibilityJSON: 'v3',
   resources,
-  lng: 'nb', // Set the default language
-  fallbackLng: 'en', // Set the fallback language
+  lng: 'nb',
+  fallbackLng: 'en',
   interpolation: { escapeValue: false },
 });
 

@@ -6,37 +6,27 @@ import { Button, StyleSheet, TouchableOpacity, FlatList, ScrollView, ActivityInd
 import * as Pitchy from 'pitchy';
 import { Audio, ResizeMode, Video } from 'expo-av';
 import { EssentiaWASM } from 'essentia.js';
-import { karaokeVideos } from '../components/karaokeVideos';
-import Constants from 'expo-constants';
+import { KaraokeVideo, karaokeVideos  } from '../components/karaokeVideos';
+import { WebView } from 'react-native-webview';
+// import Constants from 'expo-constants';
 // const vimeoApiKey = Constants.expoConfig?.extra?.vimeoApiKey
-// import YoutubePlayer from "react-native-youtube-iframe";
-// import { ScrollView } from 'react-native-reanimated/lib/typescript/Animated';
-// const youtubeApiKey = Constants.expoConfig?.extra?.youtubeApiKey;
 
-interface VimeoFile {
-    quality: string;
-    link: string;
-  }
+// interface VimeoFile {
+//     quality: string;
+//     link: string;
+//   }
   
-  interface VimeoSize {
-    width: number;
-    link: string;
-  }
+//   interface VimeoSize {
+//     width: number;
+//     link: string;
+//   }
   
-  interface VimeoResponse {
-    files: VimeoFile[];
-    pictures: {
-      sizes: VimeoSize[];
-    };
-  }
-
-type KaraokeVideos = {
-    id: string;
-    // artist: string;
-    title: string;
-    // thumbnail: string;
-    url: string | undefined;
-};
+//   interface VimeoResponse {
+//     files: VimeoFile[];
+//     pictures: {
+//       sizes: VimeoSize[];
+//     };
+//   }
 
 type Lyric = {
     time: number;
@@ -117,9 +107,14 @@ type Lyric = {
 //     return vimeoUrl;
 //   }
 
-interface VimeoVideo {
-    link_secure: string;
-    quality: string;
+interface VimeoFile {
+  type: string;
+  quality: string;
+  link: string;
+}
+
+interface VimeoApiResponse {
+  files: VimeoFile[];
 }
 
 const GameKaraoke: React.FC = () => {
@@ -128,71 +123,106 @@ const GameKaraoke: React.FC = () => {
     const videoRef = useRef<Video | null>(null);
     const recordingRef = useRef<Audio.Recording | null>(null);
     const { language } = useLanguage();
-    const [selectedVideo, setSelectedVideo] = useState<KaraokeVideos | null>(null);
+    const [selectedVideo, setSelectedVideo] = useState<KaraokeVideo | null>(null);
     const lyricsRef = useRef<Lyric[]>([]);
     const currentLyricIndex = useRef<number>(0);
-    // const vimeoUrl = useVimeoUrl(selectedVideo?.url || '');
     const [videoUrl, setVideoUrl] = useState<string | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
-    const videoId = selectedVideo?.url;
+    // const [karaokeVideos, setKaraokeVideos] = useState<KaraokeVideos[]>(initialKaraokeVideos);
+    // const [ isPlaying, setIsPlaying] = useState<boolean>(false);
+    // const videoId = selectedVideo?.url;
 
-    const vimeoApiKey = Constants.expoConfig?.extra?.vimeoApiKey || process.env.VIMEO_ACCESS_TOKEN;
+    const vimeoApiKey = '9a865bb872967a5912865f22b971cb4b';
+    const privVimeoApiKey = '7d6b191090278962eb0cf853ff6c6f43';
     
 
-    useEffect(() => {
-        // loadAudio();
-        return () => {
-          if (isRecording) {
-            stopRecording();
-          }
-        };
-      }, []);
+    // useEffect(() => {
+    //     // loadAudio();
+    //     return () => {
+    //       if (isRecording) {
+    //         stopRecording();
+    //       }
+    //     };
+    // }, []);
     
-      useEffect(() => {
-        const fetchVideoUrl = async () => {
-          try {
-            console.log('Expo Config Extra: ', Constants.expoConfig?.extra);
-            console.log('Vimeo API key: ', vimeoApiKey);
-            const response = await fetch(`https://api.vimeo.com/videos/${videoId}`, {
-              headers: {
-                Authorization: `Bearer ${Constants.expoConfig?.extra?.vimeoApiKey}`, // Ensure this matches your environment setup
-              },
-            });
+    //   useEffect(() => {
+    //     if (selectedVideo) {
+    //       const fetchVideoUrl = async (): Promise<void> => {
+    //         try {
+    //           // console.log('Expo Config Extra: ', Constants.expoConfig?.extra);
+    //           // console.log('Vimeo API key: ', vimeoApiKey);
+    //           console.log('Selected Video:', selectedVideo);
+    //           console.log('Video ID:', videoId);
+    //           const response: Response = await fetch(`https://api.vimeo.com/videos/${selectedVideo.url}`, {
+    //             headers: {
+    //               'Authorization': `Bearer ${privVimeoApiKey}`,
+    //               'Content-Type': 'application/json',
+    //               'Accept': 'application/vnd.vimeo.*+json;version=3.4'
+    //             },
+    //           });
+
+    //           if (!response.ok) {
+    //             console.log("Selected url", selectedVideo)
+    //             const errorText = await response.text();
+    //             console.error(`HTTP error! status: ${response.status}, body: ${errorText}`);
+    //             throw new Error(`HTTP error! status: ${response.status}`);
+    //           }
+      
+    //           const data: any = await response.json();
+    //           const topLevelKeys = Object.keys(data);
+    //           const topLevelData = topLevelKeys.reduce<Record<string, string | number | boolean>>((acc, key) => {
+    //             acc[key] = typeof data[key] === 'object' ? '[Object]' : data[key];
+    //             return acc;
+    //           }, {});
+    //           // console.log('Top-level Vimeo API response:', JSON.stringify(topLevelData, null, 2));
+    //           // console.log('Vimeo API response:', JSON.stringify(data, null, 2));
+
+    //           const files: VimeoFile[] = data.files;
+    //           if (data.files && Array.isArray(data.files) && data.files.length > 0) {
+    //             const mp4File = data.files.find((file: VimeoFile) => file.type === 'video/mp4' && file.quality === 'hd');
+    //             if (mp4File) {
+    //               setVideoUrl(mp4File.link);
+    //             } else {
+    //               console.error('No suitable MP4 file found');
+    //               setVideoUrl(null);
+    //             }
+    //           } else {
+    //             console.error('No files found in API response');
+    //             setVideoUrl(null);
+    //           }
+    //           // if (data.files && Array.isArray(data.files) && data.files.length > 0) {
+    //           //   const mp4File = data.files.find((file: VimeoFile) => file.type === 'video/mp4' && file.quality === 'hd');
+    //           //   if (mp4File) {
+    //           //     setVideoUrl(mp4File.link);
+    //           //   } else {
+    //           //     console.error('No suitable MP4 file found');
+    //           //     setVideoUrl(null);
+    //           //   }
+    //           // } else {
+    //           //   console.error('No files found in API response');
+    //           //   setVideoUrl(null);
+    //           // }
+    //         } catch (error) {
+    //           console.error('Error fetching video URL:', error);
+    //         } finally {
+    //           setLoading(false);
+    //         }
+    //       };
+    //       fetchVideoUrl();
+    //     }
+    //   }, [videoId]);
     
-            if (!response.ok) {
-              throw new Error('Failed to fetch video details');
-            }
+      // if (loading) {
+      //   return <ActivityIndicator size="large" color="#9000ff" />;
+      // }
     
-            const data = await response.json();
-            
-            // Ensure the 'files' property is of type 'VimeoVideo[]'
-            const videoFiles: VimeoVideo[] = data.files;
-            const videoFile = videoFiles.find(
-              (file) => file.quality === 'hd' && file.link_secure
-            );
-    
-            setVideoUrl(videoFile ? videoFile.link_secure : null);
-          } catch (error) {
-            console.error('Error fetching video URL:', error);
-          } finally {
-            setLoading(false);
-          }
-        };
-    
-        fetchVideoUrl();
-      }, [videoId]);
-    
-      if (loading) {
-        return <ActivityIndicator size="large" color="#9000ff" />;
-      }
-    
-      if (!videoUrl) {
-        return (
-          <View>
-            <Text>Video not available</Text>
-          </View>
-        );
-      }
+      // if (!videoUrl) {
+      //   return (
+      //     <View>
+      //       <Text>Video not available</Text>
+      //     </View>
+      //   );
+      // }
     
     //   const loadAudio = async (): Promise<void> => {
     //     const { sound } = await Audio.Sound.createAsync(
@@ -200,6 +230,65 @@ const GameKaraoke: React.FC = () => {
     //     );
     //     await sound.playAsync();
     //   };
+
+    useEffect(() => {
+      if (selectedVideo) {
+          fetchVideoUrl(selectedVideo.url);
+          console.log('Video URL and selectedvid: ', videoUrl, selectedVideo);
+      }
+  }, [selectedVideo]);
+
+  useEffect(() => {
+      if (selectedVideo && isRecording) {
+          if (videoRef.current) {
+              videoRef.current.playAsync();
+          }
+      } else if (!isRecording) {
+          if (videoRef.current) {
+              videoRef.current.pauseAsync();
+          }
+      }
+  }, [selectedVideo, isRecording]);
+
+  const fetchVideoUrl = async (video_id: string) => {
+      setLoading(true);
+      try {
+          const response = await fetch(`https://api.vimeo.com/videos/${video_id}`, {
+              headers: {
+                  'Authorization': `Bearer ${privVimeoApiKey}`,
+                  'Content-Type': 'application/json',
+                  'Accept': 'application/vnd.vimeo.*+json;version=3.4'
+              },
+          });
+
+          if (!response.ok) {
+              throw new Error(`HTTP error! status: ${response.status}`);
+          }
+
+          const data = await response.json();
+          console.log('Top-level API response keys:', Object.keys(data));
+          // console.log('Embed data:', JSON.stringify(data.play, null, 2));
+          console.log('Link: ', data.uri);
+          console.log('Testing api:', data.uri);
+          // console.log('Full API response:', JSON.stringify(data, null, 2));
+
+        if (data.link) {
+          console.log('Video URL:', data.link);
+          setVideoUrl(data.link);
+        // if (data.player_embed_url) {
+        //   console.log('Video URL:', data.player_embed_url);
+        //   setVideoUrl(data.player_embed_url);
+      } else {
+          console.error('No suitable video URL found');
+          setVideoUrl(null);
+      }
+      } catch (error) {
+          console.error('Error fetching video URL:', error);
+          setVideoUrl(null);
+      } finally {
+          setLoading(false);
+      }
+  };
     
       const startRecording = async (): Promise<void> => {
         try {
@@ -252,15 +341,70 @@ const GameKaraoke: React.FC = () => {
         return Math.round(pitchSimilarity * 100);
       };
 
-      const renderItem = ({ item }: { item: KaraokeVideos }) => (
-        <TouchableOpacity onPress={() => setSelectedVideo(item)} style={styles.videoItem}>
-            <Text style={styles.videoTitle}>{item.title}</Text>
-        </TouchableOpacity>
+      const renderItem = ({ item }: { item: KaraokeVideo }) => (
+        // <TouchableOpacity onPress={() => setSelectedVideo(item)} style={styles.videoItem}>
+        //     <Text style={styles.videoTitle}>{item.title}</Text>
+        // </TouchableOpacity>
+        <TouchableOpacity 
+          onPress={() => setSelectedVideo(item)}
+          style={[styles.videoItem, selectedVideo?.id === item.id && styles.selectedVideoItem]}
+        >
+        <Text style={[styles.videoTitle, selectedVideo?.id === item.id && styles.selectedVideoTitle]}>
+                {item.title}
+            </Text>
+    </TouchableOpacity>
     );
 
       return (
         <View style={styles.container}>
-            <Text style={styles.title}>{i18next.t('karaoke')}</Text>
+          <Text style={styles.title}>{i18next.t('karaoke')}</Text>
+            <View style={styles.videoContainer}>
+                {loading ? (
+                    <ActivityIndicator size="large" color="#9000ff" />
+                ) : videoUrl ? (
+                    <Video
+                        // ref={(ref: Video) => { videoRef.current = ref; }}
+                        ref={videoRef}
+                        source={{ uri: videoUrl }}
+                        useNativeControls
+                        resizeMode={ResizeMode.CONTAIN}
+                        style={{ width: 300, height: 200 }}
+                        shouldPlay={isRecording}
+                        isLooping={false}
+                        onError={(error) => console.error('Video playback error:', error)}
+                    />
+                    // <WebView
+                    //     source={{ uri: videoUrl }}
+                    //     style={{ width: 300, height: 200 }}
+                    //     javaScriptEnabled={true}
+                    //     domStorageEnabled={true}
+                    //     startInLoadingState={true}
+                    //     scalesPageToFit={true}
+                    //     onError={(syntheticEvent) => {
+                    //         const { nativeEvent } = syntheticEvent;
+                    //         console.error('WebView error: ', nativeEvent);
+                    //     }}
+                    // />
+                ) : (
+                    <Text>Select a video to play</Text>
+                )}
+            </View>
+            <View style={styles.videosListContainer}>
+                <FlatList
+                    data={karaokeVideos}
+                    renderItem={renderItem}
+                    keyExtractor={(item) => item.id}
+                    style={styles.videosList}
+                    ItemSeparatorComponent={() => <View style={styles.separator} />}
+                />
+                <Button 
+                    title={isRecording ? "Stop Singing" : "Start Singing"} 
+                    onPress={isRecording ? stopRecording : startRecording}
+                    disabled={!videoUrl} 
+                />
+                <Text>Score: {score}</Text>
+            </View>
+            {/* <Text style={styles.title}>{i18next.t('karaoke')}</Text>
             <View style={styles.videoContainer}>
             {videoUrl && (
                 <Video
@@ -284,7 +428,7 @@ const GameKaraoke: React.FC = () => {
                     onPress={isRecording ? stopRecording : startRecording} 
                 />
                 <Text>Score: {score}</Text>
-            </View>
+            </View> */}
             
                 {/* {selectedVideo ? (
                     <>
@@ -460,6 +604,13 @@ const styles = StyleSheet.create({
         height: 1,
         backgroundColor: '#ccc',
     },
+    selectedVideoItem: {
+      backgroundColor: '#e0e0e0',
+  },
+  selectedVideoTitle: {
+      fontWeight: 'bold',
+      color: '#9000ff',
+  },
 });
 
 export default GameKaraoke;

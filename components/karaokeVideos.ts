@@ -1,4 +1,10 @@
-export const karaokeVideos = [
+export type KaraokeVideo = {
+  id: string;
+  title: string;
+  url: string;
+};
+
+export const karaokeVideos: KaraokeVideo[] = [
 
   // This is the list for Vimeo url implementation..
   { id: '1', title: 'Adele - Easy On Me', url: '896928254' },

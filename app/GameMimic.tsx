@@ -1,5 +1,5 @@
 import { View, Text } from "@/components/Themed";
-import { StyleSheet, TouchableOpacity, Image } from "react-native";
+import { StyleSheet, TouchableOpacity, Image, useColorScheme } from "react-native";
 import { useLanguage } from "./LanguageContext";
 import i18next from "@/app/i18n";
 import changeLanguageModule from "@/components/changeLanguageModule";
@@ -248,7 +248,7 @@ const GameMimic = () => {
                             <Text style={styles.startMimicButtonText}>{i18next.t('mimicButtonStartText')}</Text>
                     </TouchableOpacity>
                     <View style={styles.mimicWordContainer}>
-                        <Text style={{color: Colors.light.tint, fontFamily: 'Gotu', fontSize: 22, fontWeight: '800'}}>{translate(currentWord)}</Text>
+                        <Text style={{color: useColorScheme() === 'dark' ? Colors.dark.text : Colors.light.tint, fontFamily: 'Gotu', fontSize: 22, fontWeight: '800'}}>{translate(currentWord)}</Text>
                     </View>
                 </View>
             </View>
