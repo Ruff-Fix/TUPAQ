@@ -42,6 +42,7 @@ const config = () => ({
             'expo-router',
             'expo-font',
             'expo-localization',
+            'expo-video'
         ],
         extra: {
             eas: {

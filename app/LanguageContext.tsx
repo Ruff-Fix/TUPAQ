@@ -22,3 +22,7 @@ export const LanguageProvider = ({ children }: { children: React.ReactNode }) =>
 };
 
 export const useLanguage = () => useContext(LanguageContext);
+
+export default function LanguageContextScreen() {
+  return null; // Or a placeholder screen if this file is meant to be accessed as a route
+}
