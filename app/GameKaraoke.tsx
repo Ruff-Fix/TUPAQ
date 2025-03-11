@@ -10,111 +10,40 @@ import { useEvent } from 'expo';
 import { VideoView, useVideoPlayer } from 'expo-video';
 import { EssentiaWASM } from 'essentia.js';
 import { KaraokeVideo, karaokeVideos  } from '../components/karaokeVideos';
-import { WebView } from 'react-native-webview';
+import VoiceClassification from './VoiceClassification';
 
 const ResizeMode = {
     CONTAIN: 'contain',
     COVER: 'cover',
     STRETCH: 'stretch',
 };
-// import Constants from 'expo-constants';
-// const vimeoApiKey = Constants.expoConfig?.extra?.vimeoApiKey
 
-// interface VimeoFile {
-//     quality: string;
-//     link: string;
-//   }
+interface VimeoPictureSize {
+    width: number;
+    height: number;
+    link: string;
+    link_with_play_button?: string;
+  }
   
-//   interface VimeoSize {
-//     width: number;
-//     link: string;
-//   }
+  interface VimeoPictures {
+    base_link: string;
+    sizes: VimeoPictureSize[];
+    // other properties...
+  }
   
-//   interface VimeoResponse {
-//     files: VimeoFile[];
-//     pictures: {
-//       sizes: VimeoSize[];
-//     };
-//   }
+  interface VimeoVideoResponse {
+    uri: string;
+    name: string;
+    pictures: VimeoPictures;
+    player_embed_url: string;
+    // other properties...
+  }
 
 type Lyric = {
     time: number;
     lyric: string;
     note: string | null;
 };
-
-// type VimeoLinkData = {
-//     videoUrl: string | undefined;
-//     thumbnailUrl: string | undefined;
-//   };
-
-// async function getVimeoLinks(videoId: string): Promise<VimeoLinkData> {
-//     try {
-//       const response = await fetch(`https://api.vimeo.com/videos/${videoId}`, {
-//         headers: {
-//           'Authorization': `bearer ${vimeoApiKey}`,
-//           'Content-Type': 'application/json',
-//         },
-//       });
-  
-//       if (!response.ok) {
-//         throw new Error(`HTTP error! status: ${response.status}`);
-//       }
-
-//       const data = await response.json() as VimeoResponse;
-  
-//       console.log('Full Vimeo API response:', JSON.stringify(data, null, 2));
-  
-//       const videoUrl = data.files.find(file => file.quality === 'hd')?.link;
-//       const thumbnailUrl = data.pictures.sizes.find(size => size.width === 640)?.link;
-//       return { videoUrl, thumbnailUrl };
-//   } catch (error) {
-//     console.error('Error fetching Vimeo data:', error);
-//     return { videoUrl: undefined, thumbnailUrl: undefined };
-//   }
-// }
-
-// function getVimeoLinks(url: string) {
-//     return fetch(`https://player.vimeo.com/video/${url}/config`, {
-//         headers: {
-//           'Authorization': `bearer ${vimeoAccessToken}`,
-//           'Content-Type': 'application/json',
-//         },
-//       })
-//       .then(r => r.json())
-//       .then(r => 
-//         r.request.files.progressive as {
-//           profile: number;
-//           width: number;
-//           mime: string;
-//           fps: number;
-//           url: string;
-//           cdn: string;
-//           quality: string;
-//           id: number;
-//           origin: string;
-//           height: number;
-//         }[]
-//       )
-//       .catch(error => {
-//         console.error('Error fetching Vimeo links:', error);
-//         return [];
-//       });
-// }
-
-// function useVimeoUrl(url: string) {
-//     const [vimeoUrl, setVimeoUrl] = useState<string | undefined>();
-  
-//     useEffect(() => {
-//       getVimeoLinks(url).then(linkData => {
-//         if (linkData && linkData.videoUrl) {
-//           setVimeoUrl(linkData.videoUrl);
-//         }
-//       });
-//     }, [url]);
-  
-//     return vimeoUrl;
-//   }
 
 interface VimeoFile {
   type: string;
@@ -140,9 +69,26 @@ const GameKaraoke: React.FC = () => {
     // const [karaokeVideos, setKaraokeVideos] = useState<KaraokeVideos[]>(initialKaraokeVideos);
     // const [ isPlaying, setIsPlaying] = useState<boolean>(false);
     // const videoId = selectedVideo?.url;
+    const [showVoiceModal, setShowVoiceModal] = useState<boolean>(true); // Start with modal open
+    const [userVoiceType, setUserVoiceType] = useState<string>('');
+    const [userVoiceRange, setUserVoiceRange] = useState<{min: number, max: number}>({min: 0, max: 0});
 
     const vimeoApiKey = '9a865bb872967a5912865f22b971cb4b';
     const privVimeoApiKey = '7d6b191090278962eb0cf853ff6c6f43';
+
+    // Handle voice detection results
+    const handleVoiceDetection = (voiceType: string, range: {min: number, max: number}) => {
+        setUserVoiceType(voiceType);
+        setUserVoiceRange(range);
+        
+        // Could use this data to pre-select appropriate karaoke songs
+        // or adjust pitch detection sensitivity
+    };
+    
+    // Add a button to re-test voice
+    const retestVoice = () => {
+        setShowVoiceModal(true);
+    };
  
     
     //   const loadAudio = async (): Promise<void> => {
@@ -191,17 +137,11 @@ const GameKaraoke: React.FC = () => {
     const fetchVideoUrl = async (video_id: string) => {
         setLoading(true);
         try {
-            // const response = await fetch(`https://api.vimeo.com/videos/${video_id}`, {
-            //     headers: {
-            //         'Authorization': `Bearer ${privVimeoApiKey}`,
-            //         'Content-Type': 'application/json',
-            //         'Accept': 'application/vnd.vimeo.*+json;version=3.4'
-            //     },
-            // });
-            // This endpoint will get the config which contains playable video URLs
-            const response = await fetch(`https://player.vimeo.com/video/${video_id}/config`, {
+            const response = await fetch(`https://api.vimeo.com/videos/${video_id}`, {
                 headers: {
+                    'Authorization': `Bearer ${privVimeoApiKey}`,
                     'Content-Type': 'application/json',
+                    'Accept': 'application/vnd.vimeo.*+json;version=3.4'
                 },
             });
 
@@ -209,12 +149,37 @@ const GameKaraoke: React.FC = () => {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
 
-            const data = await response.json();
-            console.log('Top-level API response keys:', Object.keys(data));
+            const data = await response.json() as VimeoVideoResponse;
             console.log('Config response retrieved');
+            console.log('Config response:', data);
 
-            // Get the progressive video streams from the response
-            const progressive = data.request?.files?.progressive;
+            // Extract the player_embed_url from the response
+            const playerEmbedUrl = data.player_embed_url;
+            
+            if (!playerEmbedUrl) {
+                throw new Error('No player embed URL found');
+            }
+            
+            // Now get the config from the player URL to find the actual video files
+            const configUrl = `${playerEmbedUrl.split('?')[0]}/config`;
+            
+            const configResponse = await fetch(configUrl, {
+                headers: {
+                    'Authorization': `Bearer ${privVimeoApiKey}`,
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/vnd.vimeo.*+json;version=3.4'
+                },
+            });
+            
+            if (!configResponse.ok) {
+                throw new Error(`HTTP error getting config! status: ${configResponse.status}`);
+            }
+            
+            const configData = await configResponse.json();
+            console.log('Player config received', configData);
+
+            // The progressive files contain the direct video URLs
+            const progressive = configData.request?.files?.progressive;
             
             if (progressive && Array.isArray(progressive) && progressive.length > 0) {
                 // Sort by quality and pick the highest quality
@@ -228,13 +193,14 @@ const GameKaraoke: React.FC = () => {
                 setVideoUrl(null);
             }
 
-            // if (data.link) {
-            // console.log('Video URL:', data.link);
-            // setVideoUrl(data.link);
-            // } else {
-            //     console.error('No suitable video URL found');
-            //     setVideoUrl(null);
-            // }
+            // We can also store the thumbnail URL for future use
+            if (data.pictures && data.pictures.sizes && data.pictures.sizes.length > 0) {
+                // Find a medium-sized thumbnail
+                const mediumThumb = data.pictures.sizes.find(size => size.width >= 640) || data.pictures.sizes[0];
+                console.log('Thumbnail URL:', mediumThumb.link);
+                // You could save this in state if needed
+                // setThumbnailUrl(mediumThumb.link);
+            }
         } catch (error) {
             console.error('Error fetching video URL:', error);
             setVideoUrl(null);
@@ -300,26 +266,56 @@ const GameKaraoke: React.FC = () => {
           style={[styles.videoItem, selectedVideo?.id === item.id && styles.selectedVideoItem]}
         >
             <View style={styles.videoItemLeft}>
-            <Image 
+            {/* <Image 
                 source={item.image} 
                 style={styles.videoItemImage}
                 resizeMode="cover"
-            />
-        </View>
-        <View style={styles.videoItemRight}>
-            <Text style={[
-                styles.videoTitle, 
-                selectedVideo?.id === item.id && styles.selectedVideoTitle
+            /> */}
+                {item.thumbnailUrl && (
+                    <Image 
+                        source={{ uri: item.thumbnailUrl }} 
+                        style={styles.videoItemImage}
+                        resizeMode="cover"
+                    />
+                )}
+            </View>
+            <View style={[
+                styles.videoItemRight,
+                selectedVideo?.id === item.id ? styles.selectedVideoItemRight : null
             ]}>
-                {item.title}
-            </Text>
-        </View>
+                <Text style={[
+                    styles.videoTitle, 
+                    selectedVideo?.id === item.id ? styles.selectedVideoTitle : null
+                ]}>
+                    {item.title}
+                </Text>
+            </View>
         </TouchableOpacity>
     );
 
       return (
         <View style={styles.container}>
-          <Text style={styles.title}>{i18next.t('karaoke')}</Text>
+            <VoiceClassification 
+                isVisible={showVoiceModal}
+                onClose={() => setShowVoiceModal(false)}
+                onVoiceTypeDetected={handleVoiceDetection}
+            />
+            <Text style={styles.title}>{i18next.t('karaoke')}</Text>
+
+            {/* Display user's voice type if available */}
+            {userVoiceType && (
+                <View style={styles.voiceInfoContainer}>
+                    <Text style={styles.voiceInfoText}>
+                        Your voice type: <Text style={styles.voiceType}>{userVoiceType}</Text>
+                    </Text>
+                    <TouchableOpacity 
+                        style={styles.retestButton}
+                        onPress={retestVoice}
+                    >
+                        <Text style={styles.retestButtonText}>Retest Voice</Text>
+                    </TouchableOpacity>
+                </View>
+            )}
             <View style={styles.videoContainer}>
                 {selectedVideo && loading ? (
                     <ActivityIndicator size="large" color="#9000ff" />
@@ -330,29 +326,6 @@ const GameKaraoke: React.FC = () => {
                         contentFit="contain"
                         nativeControls={true}
                     />
-                    // <VideoView
-                    //     // ref={(ref: Video) => { videoRef.current = ref; }}
-                    //     // ref={videoRef}
-                    //     source={{ uri: videoUrl }}
-                    //     useNativeControls
-                    //     resizeMode={ResizeMode.CONTAIN}
-                    //     style={{ width: 300, height: 200 }}
-                    //     shouldPlay={isRecording}
-                    //     isLooping={false}
-                    //     onError={(error) => console.error('Video playback error:', error)}
-                    // />
-                    // <WebView
-                    //     source={{ uri: videoUrl }}
-                    //     style={{ width: 300, height: 200 }}
-                    //     javaScriptEnabled={true}
-                    //     domStorageEnabled={true}
-                    //     startInLoadingState={true}
-                    //     scalesPageToFit={true}
-                    //     onError={(syntheticEvent) => {
-                    //         const { nativeEvent } = syntheticEvent;
-                    //         console.error('WebView error: ', nativeEvent);
-                    //     }}
-                    // />
                 ) : (
                     <Text>Select a video to play</Text>
                 )}
@@ -565,17 +538,26 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     videoItemLeft: {
-        flex: 0.15, // Takes 20% of the space
+        flex: 0.3, // Takes 20% of the space
     },
     videoItemRight: {
-        flex: 0.85, // Takes 80% of the space
+        flex: 0.7, // Takes 80% of the space
         alignItems: 'center',
     },
+    selectedVideoItemRight: {
+        backgroundColor: '#9000ff', // Only selected items get this background
+    },
     videoItemImage: {
-        width: 45,
+        // width: 45,
         height: 45,
         borderRadius: 3
     },
+    // videoThumbnail: {
+    //     width: 80,
+    //     height: 45,
+    //     marginRight: 10,
+    //     borderRadius: 5,
+    // },
     score: {
         fontSize: 20,
         fontWeight: 'bold',
@@ -586,12 +568,36 @@ const styles = StyleSheet.create({
         backgroundColor: '#9000ff',
     },
     selectedVideoItem: {
-      backgroundColor: '#e0e0e0',
-  },
-  selectedVideoTitle: {
-      fontWeight: 'bold',
-      color: '#9000ff',
-  },
+      backgroundColor: '#9000ff',
+    },
+    selectedVideoTitle: {
+        fontWeight: 'bold',
+        color: 'white',
+    },
+    voiceInfoContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginVertical: 5,
+    },
+    voiceInfoText: {
+        fontSize: 14,
+    },
+    voiceType: {
+        fontWeight: 'bold',
+        color: '#9000ff',
+    },
+    retestButton: {
+        marginLeft: 10,
+        backgroundColor: '#9000ff',
+        paddingHorizontal: 10,
+        paddingVertical: 5,
+        borderRadius: 15,
+    },
+    retestButtonText: {
+        color: 'white',
+        fontSize: 12,
+    },
 });
 
 export default GameKaraoke;
