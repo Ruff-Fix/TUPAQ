@@ -3486,15 +3486,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"async@npm:^2.0.0":
-  version: 2.6.4
-  resolution: "async@npm:2.6.4"
-  dependencies:
-    lodash: "npm:^4.17.14"
-  checksum: 10c0/0ebb3273ef96513389520adc88e0d3c45e523d03653cc9b66f5c46f4239444294899bfd13d2b569e7dbfde7da2235c35cf5fd3ece9524f935d41bbe4efccdad0
-  languageName: node
-  linkType: hard
-
 "async@npm:^3.2.3":
   version: 3.2.6
   resolution: "async@npm:3.2.6"
@@ -5254,13 +5245,6 @@ __metadata:
   version: 5.0.1
   resolution: "event-target-shim@npm:5.0.1"
   checksum: 10c0/0255d9f936215fd206156fd4caa9e8d35e62075d720dc7d847e89b417e5e62cf1ce6c9b4e0a1633a9256de0efefaf9f8d26924b1f3c8620cffb9db78e7d3076b
-  languageName: node
-  linkType: hard
-
-"eventemitter3@npm:^1.2.0":
-  version: 1.2.0
-  resolution: "eventemitter3@npm:1.2.0"
-  checksum: 10c0/8fb54d4b00d87d0d43fe9bfd4f07bb27702a8f9f23cfa3ac854470b6e23d2868501198a74494c54a8585f8d99e0ef7f63ff926623883c13b4f93e585184867a5
   languageName: node
   linkType: hard
 
@@ -8057,7 +8041,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lodash@npm:*, lodash@npm:^4.13.1, lodash@npm:^4.17.14, lodash@npm:^4.17.19, lodash@npm:^4.17.21":
+"lodash@npm:*, lodash@npm:^4.17.19, lodash@npm:^4.17.21":
   version: 4.17.21
   resolution: "lodash@npm:4.17.21"
   checksum: 10c0/d8cbea072bb08655bb4c989da418994b073a608dffa608b09ac04b43a791b12aeae7cd7ad919aa4c925f33b48490b5cfe6c1f71d827956071dae2e7bb3a6b74c
@@ -9748,17 +9732,6 @@ __metadata:
   version: 16.13.1
   resolution: "react-is@npm:16.13.1"
   checksum: 10c0/33977da7a5f1a287936a0c85639fec6ca74f4f15ef1e59a6bc20338fc73dc69555381e211f7a3529b8150a1f71e4225525b41b60b52965bda53ce7d47377ada1
-  languageName: node
-  linkType: hard
-
-"react-native-audio-toolkit@npm:^1.0.6":
-  version: 1.0.6
-  resolution: "react-native-audio-toolkit@npm:1.0.6"
-  dependencies:
-    async: "npm:^2.0.0"
-    eventemitter3: "npm:^1.2.0"
-    lodash: "npm:^4.13.1"
-  checksum: 10c0/f2157f79f9295132f85fd37a60630a7f955840f6d3cd18e1f988c30b46ed2b462e93980c4980b9b5c0dc634363e167e53de4463d605bd79e525004ef0f00f6c3
   languageName: node
   linkType: hard
 
@@ -11477,7 +11450,6 @@ __metadata:
     react-dom: "npm:18.3.1"
     react-i18next: "npm:^14.1.2"
     react-native: "npm:0.76.7"
-    react-native-audio-toolkit: "npm:^1.0.6"
     react-native-fs: "npm:^2.20.0"
     react-native-reanimated: "npm:~3.16.1"
     react-native-safe-area-context: "npm:4.12.0"
